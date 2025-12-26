@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  default:
+    desc: Deploy MySQL Cluster and bind it
+    cmds:
+      - task: mysql-create
+      - task: mysql-wait-ready
+      - task: mysql-bind
+    ignore_error: true
+
+  mysql-create:
+    desc: Create a MySQL database
+    cmds:
+      - echo "Creating MySQL database {{.NAME}}..."
+      - ./scripts/create-resources.sh mysql-cluster {{.PLAN}} {{.NAME}} mysql-cluster/values.yml {{.APP}}
+
+  mysql-wait-ready:
+    desc: Wait the MySQL database Ready
+    cmds:
+      - ./scripts/wait-resources.sh "MySQL" "{{.NAME}}" "{{.APP}}"
+  mysql-bind:
+    desc: "Bind the MySQL database resources "
+    cmds:
+      - echo "Binding MySQL database {{.NAME}}..."
+      - ./scripts/bind-resources.sh {{.NAME}} {{.APP}}
+      - ./scripts/describe-resources.sh {{.NAME}} {{.APP}}

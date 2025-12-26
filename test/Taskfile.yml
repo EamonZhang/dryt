@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+tasks:
+  default:
+    desc: test task in included Taskfile
+    cmds:
+      - echo " test task in included Taskfile {{.USERNAME}} !"
+    silent: true
+    # vars:
+    #   USERNAME: test01

@@ -1,0 +1,1 @@
+pg_url: postgres://grafana:123456@10.43.82.68:5432/grafanadb

@@ -1,0 +1,41 @@
+version: "3"
+
+tasks:
+  default:
+    desc: Deploy {{.RESOURCE}}  {{.NAME}} {{.PLAN}} in {{.APP}} and bind it
+    cmds:
+      - task: resource-prepare
+      # - task: resource-create
+      # - task: resource-wait-ready
+      # - task: resource-bind
+      - task: resource-init
+    ignore_error: true
+    # 在创建资源前进行准备工作. 如编写values文件等
+  resource-prepare:
+    desc: "Prepare the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
+    cmds:
+      # 参数 .RESOURCE 代表资源类型， .NAME 代表资源名称， .APP 代表应用名称， .DEPENDENT 代表依赖资源名称
+      - echo "Preparing {{.RESOURCE}} {{.NAME}}..."
+      - ./scripts/prepare-resources.sh {{.RESOURCE}} {{.NAME}} {{.APP}} {{ .DEPENDENT }}
+  resource-create:
+    desc: Create a {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}
+    cmds:
+      - echo "Creating {{.RESOURCE}} {{.NAME}}..."
+      - ./scripts/create-resources.sh {{.RESOURCE}} {{.PLAN}} {{.NAME}} {{.RESOURCE}}/values.yml {{.APP}}
+
+  resource-wait-ready:
+    desc: Wait the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}} Ready
+    cmds:
+      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}"
+  resource-bind:
+    desc: "Bind the {{.RESOURCE}} resources "
+    cmds:
+      - echo "Binding {{.RESOURCE}} {{.NAME}}..."
+      - ./scripts/bind-resources.sh {{.NAME}} {{.APP}}
+      - ./scripts/describe-resources.sh {{.NAME}} {{.APP}}
+  # 资源创建完成后的初始化内容，如创建数据库用户等.
+  resource-init:
+    desc: "Initialize the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
+    cmds:
+      - echo "Initializing {{.RESOURCE}} {{.NAME}}..."
+      - ./scripts/init-resources.sh {{.RESOURCE}} {{.NAME}} {{.APP}} {{.INIT}}

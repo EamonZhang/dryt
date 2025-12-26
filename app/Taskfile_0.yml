@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+tasks:
+  default:
+    desc: Create APP
+    cmds:
+      - echo " Create APP {{.APP}}!"
+      - |
+        drycc-test create {{.APP}}
+    silent: true
+    ignore_error: true
