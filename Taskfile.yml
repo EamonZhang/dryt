@@ -19,11 +19,14 @@ tasks:
       - task: mysql-cluster
       - task: mongodb01
       - task: postgresql-cluster-17
+      - task: minio
+      - task: opensearch
 
   create-resource-base02:
     desc: "Create and bind database resources"
     deps: # 并行执行
       - task: grafana
+      - task: flink
 
 includes:
   create-app:
@@ -64,3 +67,31 @@ includes:
       # 如果开启，则会将 DEPENDENT 变量传递给 prepare-resources.sh 脚本
       # 依赖的 PostgreSQL 数据库
       DEPENDENT: postgresql17-01
+  minio:
+    taskfile: resource/Taskfile.yml
+    vars:
+      RESOURCE: "minio"
+      NAME: minio01
+      PLAN: standard-v4s32
+  flink:
+    taskfile: resource/Taskfile.yml
+    vars:
+      RESOURCE: "flink"
+      NAME: flink01
+      PLAN: standard-2c4g5w
+      # 依赖的 MinIO 存储服务
+      DEPENDENT: minio01
+  opensearch:
+    taskfile: resource/Taskfile.yml
+    vars:
+      RESOURCE: "opensearch"
+      NAME: opensearch01
+      PLAN: standard-2c4g32
+  fluentbit:
+    taskfile: resource/Taskfile.yml
+    vars:
+      RESOURCE: "fluentbit"
+      NAME: fluentbit01
+      PLAN: standard-200m
+      # 依赖的 OpenSearch 服务
+      DEPENDENT: opensearch01
