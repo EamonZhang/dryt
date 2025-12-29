@@ -10,18 +10,18 @@ echo "⏳ 等待 $RESOURCE_TYPE 资源 '$RESOURCE_NAME' 就绪..."
 start=$(date +%s)
 
 
-DRYCC_TYPE=$(if command -v drycc-test &>/dev/null && drycc-test apps -h 2>/dev/null | grep -q "apps:"; then echo 0; else echo 1; fi)
+DRYCC_TYPE=$(if command -v drycc &>/dev/null && drycc apps -h 2>/dev/null | grep -q "apps:"; then echo 0; else echo 1; fi)
 while true; do
   status=""
   # 命令解析
   if [ "$DRYCC_TYPE" -eq 1 ]; then
-    # 新版 drycc-test 命令
-    status=$(drycc-test resources describe "$RESOURCE_NAME" -a "$APP_NAME" 2>/dev/null | 
+    # 新版 drycc 命令
+    status=$(drycc resources describe "$RESOURCE_NAME" -a "$APP_NAME" 2>/dev/null | 
              awk -F': ' '/Status/ {print $2}' | 
              xargs echo -n)
   else
-    # 旧版 drycc-test 命令
-    status=$(drycc-test resources:describe "$RESOURCE_NAME" -a "$APP_NAME" 2>/dev/null | 
+    # 旧版 drycc 命令
+    status=$(drycc resources:describe "$RESOURCE_NAME" -a "$APP_NAME" 2>/dev/null | 
              awk -F': ' '/Status/ {print $2}' | 
              xargs echo -n)
   fi

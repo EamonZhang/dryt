@@ -2,11 +2,11 @@
 name=$1
 app=$2
 
-if command -v drycc-test &>/dev/null && drycc-test apps -h 2>/dev/null | grep -q "apps:"; 
+if command -v drycc &>/dev/null && drycc apps -h 2>/dev/null | grep -q "apps:"; 
 then 
-  DRYCC_CMD="drycc-test resources:describe"
+  DRYCC_CMD="drycc resources:describe"
 else 
-  DRYCC_CMD="drycc-test resources describe"
+  DRYCC_CMD="drycc resources describe"
 fi
 echo "$DRYCC_CMD "${name}" -a "${app}""
 

@@ -1,6 +1,6 @@
 # Dryt
 
-Don't Repeat Yourself Task
+Don't Repeat Your Tool
 
 ## 概述
 
@@ -175,6 +175,7 @@ vars:
 
 **MySQL Cluster 通用配置为例**:
 
+- RESOURCE: "mysql-cluster" # 资源类型
 - NAME: mysql01 # 资源名称
 - PLAN: standard-2c4g20 # 资源规格
 
@@ -183,8 +184,10 @@ vars:
 ##### 资源创建后的初始化
 
 如 创建完数据数据库后需创建 user 和 database 等工作
+
 **PostgreSQL Cluster 17**:
 
+- RESOURCE: postgresql-cluster-17
 - NAME: postgresql17-01 # 资源名称
 - PLAN: standard-2c4g20 # 资源规格
 - INIT: "true" # 是否初始化数据库（创建用户和数据库）
@@ -197,6 +200,7 @@ vars:
 
 **Grafana**:
 
+- RESOURCE: grafana
 - NAME: grafana01 # 资源名称
 - PLAN: standard-1c1g5 # 资源规格
 - DEPENDENT: postgresql17-01 # 依赖的 PostgreSQL 资源

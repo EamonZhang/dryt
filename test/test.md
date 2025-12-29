@@ -1,4 +1,4 @@
-drycc-test apps destroy -a apptest01 --confirm=apptest01
+drycc apps destroy -a apptest01 --confirm=apptest01
 
 kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get -n apptest01 --ignore-not-found
 
@@ -24,14 +24,14 @@ EOF
 
 echo "操作完成"
 
-# sh: if command -v drycc-test &>/dev/null && drycc-test apps -h 2>/dev/null | grep -q "apps:"; then echo 0; else echo 1; fi
+# sh: if command -v drycc &>/dev/null && drycc apps -h 2>/dev/null | grep -q "apps:"; then echo 0; else echo 1; fi
 
-drycc-test resources unbind mysql01 -a apptest01
-drycc-test resources destroy mysql01 -a apptest01 --confirm=mysql01
+drycc resources unbind mysql01 -a apptest01
+drycc resources destroy mysql01 -a apptest01 --confirm=mysql01
 
-drycc-test resources unbind mongodb01 -a apptest01
-drycc-test resources destroy mongodb01 -a apptest01 --confirm=mongodb01
+drycc resources unbind mongodb01 -a apptest01
+drycc resources destroy mongodb01 -a apptest01 --confirm=mongodb01
 
-drycc-test resources unbind postgresql17-01 -a apptest01
-drycc-test resources destroy postgresql17-01 -a apptest01 --confirm=postgresql17-01
-drycc-test apps destroy -a apptest01 --confirm=apptest01
+drycc resources unbind postgresql17-01 -a apptest01
+drycc resources destroy postgresql17-01 -a apptest01 --confirm=postgresql17-01
+drycc apps destroy -a apptest01 --confirm=apptest01

@@ -12,7 +12,7 @@ tasks:
     desc: Create a MySQL database
     cmds:
       - echo "Creating MySQL database {{.NAME}}..."
-      - drycc-test resources create {{.NAME}}  mysql-cluster {{.PLAN}} -f mysql-cluster/values.yml -a {{.APP}}
+      - drycc resources create {{.NAME}}  mysql-cluster {{.PLAN}} -f mysql-cluster/values.yml -a {{.APP}}
 
   mysql-wait-ready:
     desc: Wait the MySQL database Ready
@@ -22,7 +22,7 @@ tasks:
         start=$(date +%s)
 
         while true; do
-          status=$(drycc-test resources describe {{.NAME}} -a {{.APP}} | grep Status | awk '{print $2}')
+          status=$(drycc resources describe {{.NAME}} -a {{.APP}} | grep Status | awk '{print $2}')
           elapsed=$(( $(date +%s) - start ))
           
           if [ "$status" = "Ready" ]; then
@@ -39,9 +39,9 @@ tasks:
     cmds:
       - echo "Binding MySQL database {{.NAME}}..."
       - |
-        drycc-test resources bind {{.NAME}} -a {{.APP}} && sleep 5
+        drycc resources bind {{.NAME}} -a {{.APP}} && sleep 5
       - |
-        drycc-test resources describe {{.NAME}} -a {{.APP}} |
+        drycc resources describe {{.NAME}} -a {{.APP}} |
         awk '/Data:/{flag=1; next} /^[^ ]/{flag=0} flag && /^[[:space:]]/{
         gsub(/^[[:space:]]+|[[:space:]]+$/, "");
         split($0, a, /:[[:space:]]*/);

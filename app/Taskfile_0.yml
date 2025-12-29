@@ -8,6 +8,6 @@ tasks:
     cmds:
       - echo " Create APP {{.APP}}!"
       - |
-        drycc-test create {{.APP}}
+        drycc create {{.APP}}
     silent: true
     ignore_error: true
