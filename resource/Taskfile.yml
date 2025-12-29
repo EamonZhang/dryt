@@ -5,9 +5,9 @@ tasks:
     desc: Deploy {{.RESOURCE}}  {{.NAME}} {{.PLAN}} in {{.APP}} and bind it
     cmds:
       - task: resource-prepare
-      # - task: resource-create
-      # - task: resource-wait-ready
-      # - task: resource-bind
+      - task: resource-create
+      - task: resource-wait-ready
+      - task: resource-bind
       - task: resource-init
     ignore_error: true
     # 在创建资源前进行准备工作. 如编写values文件等

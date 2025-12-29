@@ -17,12 +17,13 @@ tasks:
     desc: "Create and bind database resources"
     deps: # 并行执行
       - task: mysql-cluster
-      - task: mongodb
+      - task: mongodb01
+      - task: postgresql-cluster-17
 
   create-resource-base02:
     desc: "Create and bind database resources"
     deps: # 并行执行
-      - task: postgresql-cluster-17
+      - task: grafana
 
 includes:
   create-app:
@@ -35,7 +36,7 @@ includes:
       RESOURCE: "mysql-cluster"
       NAME: mysql01
       PLAN: standard-2c4g20
-  mongodb:
+  mongodb01:
     taskfile: resource/Taskfile.yml
     # define variables for mongodb
     vars:

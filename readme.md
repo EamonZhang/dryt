@@ -1,6 +1,6 @@
 # Dryt
 
-Don't Repeat Your Tool
+Don't Repeat Yourself Tool
 
 ## 概述
 
