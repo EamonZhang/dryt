@@ -15,34 +15,36 @@ tasks:
     desc: "Prepare the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
     cmds:
       # 参数 .RESOURCE 代表资源类型， .NAME 代表资源名称， .APP 代表应用名称， .DEPENDENT 代表依赖资源名称
-      - echo "Preparing {{.RESOURCE}} {{.NAME}}..."
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Preparing {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/prepare-resources.sh {{.RESOURCE}} {{.NAME}} {{.APP}} {{ .DEPENDENT }}
   resource-create:
     desc: Create a {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}
     cmds:
-      - echo "Creating {{.RESOURCE}} {{.NAME}}..."
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Creating {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/create-resources.sh {{.RESOURCE}} {{.PLAN}} {{.NAME}} {{.RESOURCE}}/values.yml {{.APP}}
   resource-wait-ready:
     desc: Wait the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}} Create Ready
     cmds:
-      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}" "Status"
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Waiting {{.RESOURCE}} {{.NAME}} Status Ready..."
+      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}" 1800 "Status"
   resource-bind:
     desc: "Bind the {{.RESOURCE}} resources "
     cmds:
-      - echo "Binding {{.RESOURCE}} {{.NAME}}..."
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Binding {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/bind-resources.sh {{.NAME}} {{.APP}}
   resource-wait-bind-ready:
     desc: Wait the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}} Bind Ready
     cmds:
-      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}" "Binding" 
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Waiting {{.RESOURCE}} {{.NAME}} Binding Ready..."
+      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}" 1800 "Binding"
   resource-describe:
     desc: "describe the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
     cmds:
-      - echo "Describe {{.RESOURCE}} {{.NAME}}..."
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Describe {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/describe-resources.sh {{.NAME}} {{.APP}}
   # 资源创建完成后的初始化内容，如创建数据库用户等.
   resource-init:
     desc: "Initialize the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
     cmds:
-      - echo "Initializing {{.RESOURCE}} {{.NAME}}..."
+      - echo "$(date '+%Y-%m-%d %H:%M:%S') Initializing {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/init-resources.sh {{.RESOURCE}} {{.NAME}} {{.APP}} {{.INIT}}
