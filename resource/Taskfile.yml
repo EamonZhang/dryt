@@ -10,7 +10,7 @@ tasks:
       - task: resource-bind
       - task: resource-init
     ignore_error: true
-    # 在创建资源前进行准备工作. 如编写values文件等
+    # 在创建资源前进行准备工作. 如编写 values 文件等
   resource-prepare:
     desc: "Prepare the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
     cmds:
@@ -22,16 +22,23 @@ tasks:
     cmds:
       - echo "Creating {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/create-resources.sh {{.RESOURCE}} {{.PLAN}} {{.NAME}} {{.RESOURCE}}/values.yml {{.APP}}
-
   resource-wait-ready:
-    desc: Wait the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}} Ready
+    desc: Wait the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}} Create Ready
     cmds:
-      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}"
+      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}" "Status"
   resource-bind:
     desc: "Bind the {{.RESOURCE}} resources "
     cmds:
       - echo "Binding {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/bind-resources.sh {{.NAME}} {{.APP}}
+  resource-wait-bind-ready:
+    desc: Wait the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}} Bind Ready
+    cmds:
+      - ./scripts/wait-resources.sh {{.RESOURCE}} "{{.NAME}}" "{{.APP}}" "Binding" 
+  resource-describe:
+    desc: "describe the {{.RESOURCE}} {{.NAME}} {{.PLAN}} in {{.APP}}"
+    cmds:
+      - echo "Describe {{.RESOURCE}} {{.NAME}}..."
       - ./scripts/describe-resources.sh {{.NAME}} {{.APP}}
   # 资源创建完成后的初始化内容，如创建数据库用户等.
   resource-init:
